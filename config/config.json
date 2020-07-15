@@ -1,0 +1,27 @@
+{
+  "development": {
+    "username": "root",
+    "password": "root",
+    "database": "heart_to_heart_server_dev_db",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "operatorsAliases": false
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "operatorsAliases": false
+  },
+  "production": {
+    "username": "bed5ca7296af68",
+    "password": "cbef598e",
+    "database": "database_production",
+    "host": "us-cdbr-east-02.cleardb.com",
+    "dialect": "mysql",
+    "operatorsAliases": false
+  }
+}
+
