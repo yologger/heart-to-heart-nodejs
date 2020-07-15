@@ -9,13 +9,13 @@ router.get('/get', (req, res) => {
 router.use('/insert', async (req, res) => {
     try {
         var result = await User.create({
-            email: 'ramos@gmail.com',
+            email: 'kane@gmail.com',
             firstname: 'Sergio',
             lastname: 'Ramos',
             nickname: 'ramos4',
             password: 'ramos'
         })
-        println(`RESULT: ${result}`)
+        console.log(`RESULT: ${result.email}`)
     } catch(err) {
         console.error(err)
         res.send('ERROR')
