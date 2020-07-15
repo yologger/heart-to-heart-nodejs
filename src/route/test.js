@@ -7,7 +7,6 @@ router.get('/get', (req, res) => {
 })
 
 router.use('/insert', async (req, res) => {
- 
     try {
         var result = await User.create({
             email: 'ramos@gmail.com',
@@ -19,8 +18,9 @@ router.use('/insert', async (req, res) => {
         println(`RESULT: ${result}`)
     } catch(err) {
         console.error(err)
+        res.send('ERROR')
     }
-    res.send('RESULT!!')
+    res.send('SUCCESS!!')
 })
 
 
