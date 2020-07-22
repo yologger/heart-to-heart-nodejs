@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => (
         },
         password: {
             type: DataTypes.STRING(100),
-            allowNull: true
+            allowNull: false
         },
         firstname: {
             type: DataTypes.STRING(25),
@@ -20,6 +20,14 @@ module.exports = (sequelize, DataTypes) => (
         nickname: {
             type: DataTypes.STRING(25),
             allowNull: false
+        },
+        access_token: {
+            type: DataTypes.STRING(300),
+            allowNull: true
+        },
+        refresh_token: {
+            type: DataTypes.STRING(300),
+            allowNull: true
         }
     }, {
         timestamps: true,
