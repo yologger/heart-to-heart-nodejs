@@ -4,9 +4,9 @@ const { User } = require('../../models')
 
 router.get('/test', (req , res) => {
     var person = {
-        "name": "ronaldo",
-        "nation": "portugal",
-        "age": 35
+        name: "ronaldo",
+        nation: "portugal",
+        age: 35
     }
     res.json(person)
 })
