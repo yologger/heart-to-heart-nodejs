@@ -10,7 +10,7 @@ router.get('/test', verifyAccessToken, (req, res) => {
     res.json({
         "code": 200,
         "data": {
-            "message": "Success /auth/test"
+            "message": "Success /auth/test~"
         }
     })
 })
@@ -77,60 +77,60 @@ router.post('/login', (req, res, next) => {
         if (!user) {
             return res.status(400).json({
                 message: info.message,
-                code: -100
+                code: -001
             });
         }
 
         // Login
         req.login(user, { session: false }, async (error) => {
-
-            if (error) {
-                return res.status(404).json({
-                    "code": -333,
-                    "message": error.message
-                })
-            }
-
-            var payload = {
-                email: user.email,
-                firstname: user.firstname,
-                lastname: user.lastname,
-                nickname: user.nickname
-            }
-
-            var access_token = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
-                expiresIn: process.env.ACCESS_TOKEN_EXPIRE,
-                issuer: process.env.TOKEN_ISSUER
-            })
-
-            var refresh_token = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {
-                expiresIn: process.env.REFRESH_TOKEN_EXPIRE,
-                issuer: process.env.TOKEN_ISSUER
-            })
-
             try {
+                if (error) {
+                    return res.status(500).json({
+                        "code": -002,
+                        "message": error.message
+                    })
+                }
+
+                var payload = {
+                    email: user.email,
+                    firstname: user.firstname,
+                    lastname: user.lastname,
+                    nickname: user.nickname
+                }
+
+                var accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
+                    expiresIn: process.env.ACCESS_TOKEN_EXPIRE,
+                    issuer: process.env.TOKEN_ISSUER
+                })
+
+                var refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {
+                    expiresIn: process.env.REFRESH_TOKEN_EXPIRE,
+                    issuer: process.env.TOKEN_ISSUER
+                })
+
                 await User.update({
-                    access_token: access_token,
-                    refresh_token: refresh_token
+                    access_token: accessToken,
+                    refresh_token: refreshToken
                 }, {
                     where: { email: user.email }
                 })
+
+                return res.status(201).json({
+                    "code": 201,
+                    "message": "Successfuly logged in.",
+                    "data": {
+                        "client_id": user.id,
+                        "email": user.email,
+                        "nickname": user.nickname,
+                        "access_token": accessToken,
+                        "refresh_token": refreshToken
+                    }
+                })
+
             } catch (error) {
                 console.error(error)
                 next(error.message)
             }
-
-            return res.status(201).json({
-                "code": 201,
-                "message": "Successfuly logged in.",
-                "data": {
-                    "client_id": user.id,
-                    "email": user.email,
-                    "nickname": user.nickname,
-                    "access_token": access_token,
-                    "refresh_token": refresh_token
-                }
-            })
         })
 
     })(req, res, next);
@@ -170,13 +170,14 @@ router.post('/token', verifyRefreshToken, async (req, res) => {
                 })
 
                 await User.update({
+                    access_token: new_access_token,
                     refresh_token: new_refresh_token
                 }, {
                     where: { refresh_token: refresh_token_from_db }
                 })
 
                 res.status(201).json({
-                    "code": 201,
+                    "code": 001,
                     "message": 'Tokens have been successfuly reissued. ',
                     "data": {
                         "client_id": exUser.dataValues.id,
@@ -212,45 +213,27 @@ router.post('/token', verifyRefreshToken, async (req, res) => {
 })
 
 
-router.post('/logout', async (req, res) => {
+router.post('/logout', verifyAccessToken, async (req, res) => {
 
     try {
         var authHeader = req.headers.authorization
-        if (authHeader.startsWith('Bearer ')) {
-            var access_token = authHeader.substring(7, authHeader.length)
+        var accessToken = authHeader.substring(7, authHeader.length)
 
-            var exUser = await User.findOne({
-                where: { access_token: access_token }
-            })
-
-            if (exUser) {
-                var decoded = jwt.decode(access_token);
-
-                await User.update({
-                    access_token: null,
-                    refresh_token: null
-                }, {
-                    where: {
-                        email: decoded.email
-                    }
-                })
-
-                res.status(202).json({
-                    code: 202,
-                    message: `Successfully logged out.`
-                })
-            } else {
-                res.status(488).json({
-                    code: 488,
-                    message: `Invalid access token`
-                })
+        var decoded = jwt.decode(accessToken);
+        await User.update({
+            access_token: null,
+            refresh_token: null
+        }, {
+            where: {
+                email: decoded.email
             }
-        } else {
-            res.status(419).json({
-                code: 419,
-                message: `Authorization header must starts with Bearer.`
-            });
-        }
+        })
+
+        res.status(202).json({
+            code: 202,
+            message: `Successfully logged out.`
+        })
+
     } catch (error) {
         console.error(error)
         next(error)
