@@ -3,15 +3,18 @@ const app = express()
 const morgan = require('morgan')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
-const dotenv = require('dotenv')
+const path = require('path')
+const helmet = require('helmet')
+const hpp = require('hpp')
+
+const logger = require('./logger')
+
+require('dotenv').config()
 const port = process.env.PORT || 8000;
 
 // Seqeulize
 const { sequelize } = require('../models/index');
 sequelize.sync()
-
-// Dotenv
-dotenv.config()
 
 // Passport
 const passport = require('passport')
@@ -24,12 +27,22 @@ const userRouter = require('./route/user')
 const postRouter = require('./route/post')
 const authRouter = require('./route/auth')
 
-app.use('/', morgan('dev'))
+// Morgan
+if (process.env.NODE_ENV === 'production') {
+    app.use('/', morgan('combined'))
+    app.use('/', helmet())
+    app.use('/', hpp())
+} else {
+    app.use('/', morgan('dev'))
+} 
+
+app.use('/', express.static(path.join(__dirname, 'public')))
 app.use('/', bodyParser.urlencoded({ extended: false }))
 app.use('/', bodyParser.json())
 app.use('/', cookieParser())
 app.use('/', passport.initialize())
 app.use('/', passport.session())
+app.use('/test', testRouter)
 app.use('/user', userRouter)
 app.use('/post', postRouter)
 app.use('/auth', authRouter)
@@ -45,6 +58,8 @@ app.use((req, res, next) => {
 
 // Error Handler
 app.use((error, req, res, next) => {
+    logger.info("Hello")
+    logger.error(error.message)
     res.status(error.status || 500)
     res.json({
         "message": error.message,

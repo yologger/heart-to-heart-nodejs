@@ -1,36 +1,80 @@
 const express = require('express')
 const router = express.Router()
-const { User } = require('../../models')
+const { User, Post, Session, Hashtag } = require('../../models/index.js')
 
-router.get('/test', (req , res) => {
-    var person = {
-        name: "ronaldo",
-        nation: "portugal",
-        age: 35
+router.get("/get", (req, res) => {
+
+
+    console.log(req.body.name)
+    console.log(req.body.nation)
+
+    var data = {
+        data: "test data",
+        method: "get"
     }
-    res.json(person)
+    res.status(200).json(data)
 })
 
-router.get('/get', (req, res) => {
-    res.send('/test/get')
+router.post("/post", (req, res) => {
+
+    console.log(req.headers["content-type"])    // multipart/form-data; boundary=----WebKitFormBoundaryQGuQBj0fNlb8oe96
+
+    var data = {
+        name: name,
+        nation: nation
+    }
+    res.json(data)
 })
 
-router.use('/insert', async (req, res) => {
+router.post("/token", (req, res) => {
+    var data = {
+        data: "token",
+        method: "token"
+    }
+    res.status(200).json(data)
+})
+
+router.get("/test", (req, res) => {
+    var data = {
+        data: "test data",
+        method: "test"
+    }
+    res.status(200).json(data)
+})
+
+router.get('/test2', async (req, res) => {
+
     try {
-        var result = await User.create({
-            email: 'kane@gmail.com',
-            firstname: 'Sergio',
-            lastname: 'Ramos',
-            nickname: 'ramos4',
-            password: 'ramos'
-        })
-        console.log(`RESULT: ${result.email}`)
-    } catch(err) {
-        console.error(err)
-        res.send('ERROR')
-    }
-    res.send('SUCCESS!!')
-})
 
+        var user = await User.findOne({ where: { id: 1 } })
+
+        console.log(await user.getSession())		// null
+
+        await user.createSession({
+            access_token: "new_access_token_value",
+            refresh_token: "new_refresh_token_value",
+        })
+
+        console.log(await user.getSession())		// not-null
+
+        var new_session = await Session.create({
+            access_token: "new_access_token_value",
+            refresh_token: "new_refresh_token_value",
+        })
+
+        await user.setSession(new_session)
+
+        var session = await user.getSession()
+        console.log(session)		// not-null
+
+    } catch (e) {
+        console.log(e)
+    }
+
+    var data = {
+        data: "test2"
+    }
+    res.status(200).json(data)
+})
 
 module.exports = router

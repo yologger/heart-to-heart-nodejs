@@ -1,6 +1,6 @@
 const LocalStrategy = require('passport-local')
 const bcrypt = require('bcrypt')
-const { User } = require('../../models')
+const { User } = require('../../models/index.js')
 
 module.exports = (passport) => {
     passport.use(new LocalStrategy({
@@ -19,19 +19,25 @@ module.exports = (passport) => {
                 var user = {
                     id: exuser.dataValues.id,
                     email: exuser.dataValues.email,
-                    firstname: exuser.dataValues.firstname,
-                    lastname: exuser.dataValues.lastname,
+                    firstName: exuser.dataValues.first_name,
+                    lastName: exuser.dataValues.last_name,
                     nickname: exuser.dataValues.nickname
                 }
 
                 if (result) {
                     done(null, user)
                 } else {
-                    done(null, false, { message: 'Password incorrect' })
+                    done(null, false, { 
+                        code: -2,
+                        message: 'Invalid Password' 
+                    })
                 }
 
             } else {
-                done(null, false, { message: 'User doesn not exist.' })
+                done(null, false, { 
+                    code: -1,
+                    message: 'Invalid Email' 
+                })
             }
 
         } catch (error) {

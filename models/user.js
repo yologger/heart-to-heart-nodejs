@@ -1,35 +1,38 @@
-module.exports = (sequelize, DataTypes) => (
+module.exports = (sequelize, Sequelize) => (
     sequelize.define('user', {
         email: {
-            type: DataTypes.STRING(40),
+            type: Sequelize.STRING(40),
             allowNull: true,
             unique: true
         },
-        password: {
-            type: DataTypes.STRING(100),
+        first_name: {
+            type: Sequelize.STRING(25),
             allowNull: false
         },
-        firstname: {
-            type: DataTypes.STRING(25),
-            allowNull: false
-        },
-        lastname: {
-            type: DataTypes.STRING(25),
+        last_name: {
+            type: Sequelize.STRING(25),
             allowNull: false
         },
         nickname: {
-            type: DataTypes.STRING(25),
+            type: Sequelize.STRING(25),
+            allowNull: false
+        },
+        password: {
+            type: Sequelize.STRING(100),
             allowNull: false
         },
         access_token: {
-            type: DataTypes.STRING(300),
+            type: Sequelize.STRING(300),
             allowNull: true
         },
         refresh_token: {
-            type: DataTypes.STRING(300),
+            type: Sequelize.STRING(300),
             allowNull: true
         }
     }, {
+        freezeTableName: true,
+        tableName: "user",
+        underscored: true,
         timestamps: true,
         paranoid: true
     })

@@ -2,26 +2,17 @@ const express = require('express')
 const bcrypto = require('bcrypt')
 const passport = require('passport')
 const jwt = require('jsonwebtoken')
-const { User } = require('../../models')
+const { User } = require('../../models/index.js')
 const { verifyAccessToken, verifyRefreshToken } = require('../middleware')
 const router = express.Router()
-
-router.get('/test', verifyAccessToken, (req, res) => {
-    res.json({
-        "code": 200,
-        "data": {
-            "message": "Success /auth/test~"
-        }
-    })
-})
 
 router.post('/signup', async (req, res, next) => {
 
     var email = req.body.email
-    var firstname = req.body.firstname
-    var lastname = req.body.lastname
+    var firstName = req.body.firstName
+    var lastName = req.body.lastName
+    var nickName = req.body.nickname
     var password = req.body.password
-    var nickname = req.body.nickname
 
     try {
         var exUser = await User.findOne({
@@ -30,10 +21,9 @@ router.post('/signup', async (req, res, next) => {
 
         if (exUser) {
             var response = {
-                "message": "Email already exists.",
-                "code": -401
+                "code": -1,
+                "error_message": "Email already exists."
             }
-
             res.status(403)
             res.json(response)
 
@@ -42,16 +32,19 @@ router.post('/signup', async (req, res, next) => {
 
             var result = await User.create({
                 email: email,
-                firstname: firstname,
-                lastname: lastname,
-                password: hash,
-                nickname: nickname
+                first_name: firstName,
+                last_name: lastName,
+                nickname: nickName,
+                password: hash
             })
 
             var response = {
-                "email": result.dataValues.email,
+                "code": 1,
                 "message": 'Successfully signed up.',
-                "code": 201
+                "data": {
+                    "email": result.dataValues.email,
+                    "nickname": result.dataValues.nickname
+                }
             }
 
             res.status(201)
@@ -73,12 +66,22 @@ router.post('/login', (req, res, next) => {
             return next(error)
         }
 
-        // User does not exist || Password incorrect
+        // Wrong Email || Wrong Password
         if (!user) {
-            return res.status(400).json({
-                message: info.message,
-                code: -001
-            });
+            if (info.code == -1) {
+                // Invalid Email
+                return res.status(400).json({
+                    "code": -1,
+                    "error_message": info.message
+                });
+                
+            } else {
+                // Invalid Password
+                return res.status(400).json({
+                    "code": -2,
+                    "error_message": info.message
+                })
+            }
         }
 
         // Login
@@ -86,15 +89,15 @@ router.post('/login', (req, res, next) => {
             try {
                 if (error) {
                     return res.status(500).json({
-                        "code": -002,
-                        "message": error.message
+                        "code": -3, 
+                        "error_message": error.message
                     })
                 }
 
                 var payload = {
                     email: user.email,
-                    firstname: user.firstname,
-                    lastname: user.lastname,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
                     nickname: user.nickname
                 }
 
@@ -116,10 +119,10 @@ router.post('/login', (req, res, next) => {
                 })
 
                 return res.status(201).json({
-                    "code": 201,
+                    "code": 1,
                     "message": "Successfuly logged in.",
                     "data": {
-                        "client_id": user.id,
+                        "user_id": user.id,
                         "email": user.email,
                         "nickname": user.nickname,
                         "access_token": accessToken,
@@ -135,7 +138,6 @@ router.post('/login', (req, res, next) => {
 
     })(req, res, next);
 });
-
 
 router.post('/token', verifyRefreshToken, async (req, res) => {
 
@@ -178,7 +180,7 @@ router.post('/token', verifyRefreshToken, async (req, res) => {
 
                 res.status(201).json({
                     "code": 001,
-                    "message": 'Tokens have been successfuly reissued. ',
+                    "message": 'Tokens have been successfully reissued. ',
                     "data": {
                         "client_id": exUser.dataValues.id,
                         "email": exUser.dataValues.email,
@@ -190,21 +192,19 @@ router.post('/token', verifyRefreshToken, async (req, res) => {
 
             } else {
                 var response = {
-                    "message": "Invalid refresh token",
-                    "code": -401
+                    "code": -007,
+                    "error_message": "Invalid Refresh token."
                 }
 
-                res.status(403)
-                res.json(response)
+                res.status(401).json(response)
             }
         } else {
+            console.log("Invalid Refresh Token. User does not exist.")
             var response = {
-                "message": "User does not exist.",
-                "code": -401
+                "code": -8,
+                "error_message": "Invalid Refresh Token. User does not exist.",
             }
-
-            res.status(403)
-            res.json(response)
+            res.status(401).json(response)
         }
     } catch (error) {
         console.error(error)
@@ -212,14 +212,13 @@ router.post('/token', verifyRefreshToken, async (req, res) => {
     }
 })
 
-
 router.post('/logout', verifyAccessToken, async (req, res) => {
 
     try {
         var authHeader = req.headers.authorization
         var accessToken = authHeader.substring(7, authHeader.length)
-
         var decoded = jwt.decode(accessToken);
+        
         await User.update({
             access_token: null,
             refresh_token: null
@@ -230,7 +229,7 @@ router.post('/logout', verifyAccessToken, async (req, res) => {
         })
 
         res.status(202).json({
-            code: 202,
+            code: 1,
             message: `Successfully logged out.`
         })
 
