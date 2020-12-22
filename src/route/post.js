@@ -21,34 +21,52 @@ const upload = multer({
             callback(null, path.basename(file.originalname, ext) + '_' + new Date().valueOf() + ext)
         }
     }),
-    // limits: { fileSize: 5 * 1024 * 1024 }
-    limits: { fileSize: 1024 * 1024 * 1024 }
+    limits: { fileSize: 5 * 1024 * 1024 }   // 5MB
 })
 
-router.post('/img', upload.single('field'), (req, res) => {
-    console.log(`REQ.BODY.EMAIL: ${req.body.email}`)
-    console.log(`REQ.BODY.NAME: ${req.body.name}`)
-    console.log(`REQ.FILE:`)
-    console.log(req.file)
-    console.log("############################################################")
-    res.json({
-        url: `/img/${req.file.filename}`
-    })
-})
+// router.post('/img', upload.single('field'), (req, res) => {
+//     res.status(200).json({
+//         code: 1,
+//         message: "Single image successfully uploaded.",
+//         data: {
+//             image: req.file.path
+//         }
+//     })
+// })
 
-router.post('/imgs', upload.array('field'), (req, res) => {
-    console.log(`REQ.BODY.EMAIL: ${req.body.email}`)
-    console.log(`REQ.BODY.NAME: ${req.body.name}`)
-    console.log(`REQ.FILE:`)
-    res.json({
-        url: {
-            'avatar1': `/imgs/${req.files[0].filename}`,
-            'avatar2': `/imgs/${req.files[1].filename}`
+// router.post('/imgs', upload.array('field'), (req, res) => {
+//     let images = []
+
+//     for (var idx in req.files) {
+//         images.push(req.files[idx].path)
+//     }
+
+//     res.status(200).json({
+//         code: 1,
+//         message: "Multiple images successfully uploaded.",
+//         data: {
+//             images: images
+//         }
+//     })
+// })
+
+router.post('/post', upload.array('field'), (req, res) => {
+    let images = []
+
+    for (var idx in req.files) {
+        images.push(req.files[idx].path)
+    }
+
+    console.log(req.body['content'])
+
+    res.status(200).json({
+        code: 1,
+        message: "Post successfully created.",
+        data: {
+            images: images
         }
     })
 })
-
-
 
 router.get('/test', verifyAccessToken, (req, res) => {
     res.status(202).json({
@@ -67,11 +85,11 @@ router.get('/test', verifyAccessToken, (req, res) => {
     })
 })
 
-// router.post('/img', (req, res) => {
-//     console.log('Hello World!!!!~!!~')
-//     res.json({
-//         "result": "result"
-//     })
-// })
+router.post('/', (req, res) => {
+    console.log('Hello World!!!!~!!~')
+    res.status(233).json({
+        "result": "result"
+    })
+})
 
 module.exports = router
