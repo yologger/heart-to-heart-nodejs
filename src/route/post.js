@@ -4,6 +4,7 @@ const multer = require('multer')
 const fs = require('fs')
 const path = require('path')
 const { verifyAccessToken } = require('../middleware')
+const { User, PostImage, Post } = require('../../models')
 
 fs.readdir('uploads', (error) => {
     if (error) {
@@ -50,22 +51,54 @@ const upload = multer({
 //     })
 // })
 
-router.post('/post', upload.array('field'), (req, res) => {
-    let images = []
+router.post('/post', upload.array('field'), async (req, res, next) => {
 
-    for (var idx in req.files) {
-        images.push(req.files[idx].path)
-    }
+    try {
+        let user = await User.findOne({
+            where: { id: req.body["user_id"] }
+        })
 
-    console.log(req.body['content'])
-
-    res.status(200).json({
-        code: 1,
-        message: "Post successfully created.",
-        data: {
-            images: images
+        if(!user) {
+            // User does not exist.
+            return res.status(400).json({
+                "code": -1,
+                "error_message": "User does not exist."
+            });
         }
-    })
+
+        let post = await user.createPost({
+            user_id: req.body["user_id"],
+            content: req.body["content"]
+        })
+
+        let images = []
+        for (var idx in req.files) {
+            images.push({
+                url: req.files[idx].path
+            })
+        }
+
+        let postImages = await PostImage.bulkCreate(images)
+        await post.addPostImages(postImages)
+
+
+        let urls = []
+        for (var idx in req.files) {
+            urls.push(req.files[idx].path)
+        }
+
+        res.status(200).json({
+            code: 1,
+            message: "Post successfully created.",
+            data: {
+                "image_urls": urls
+            }
+        })
+
+    } catch(error) {
+        console.error(error)
+        next(error)
+    }
 })
 
 router.get('/test', verifyAccessToken, (req, res) => {

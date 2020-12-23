@@ -1,7 +1,7 @@
 module.exports = (sequelize, Sequelize) => (
-    sequelize.define('post_image', {
+    sequelize.define('postImage', {
         url: {
-            type: Sequelize.STRING(100),
+            type: Sequelize.STRING(300),
             allowNull: false
         },
     }, {

@@ -27,3 +27,35 @@
 {"message":"Unexpected field","level":"error"}
 {"message":"Unexpected field","level":"error"}
 {"message":"Unexpected field","level":"error"}
+{"message":"body is not defined","level":"error"}
+{"message":"body is not defined","level":"error"}
+{"message":"Unknown column 'user.userId' in 'where clause'","level":"error"}
+{"message":"Unknown column 'user.userId' in 'where clause'","level":"error"}
+{"message":"Unknown column 'user.user_id' in 'where clause'","level":"error"}
+{"message":"Unknown column 'user.user_id' in 'where clause'","level":"error"}
+{"message":"Cannot access 'images' before initialization","level":"error"}
+{"message":"Cannot access 'images' before initialization","level":"error"}
+{"message":"post.addPostImages is not a function","level":"error"}
+{"message":"post.addPostImages is not a function","level":"error"}
+{"message":"post.createPostImage is not a function","level":"error"}
+{"message":"post.createPostImage is not a function","level":"error"}
+{"message":"Cannot add or update a child row: a foreign key constraint fails (`heart_to_heart_server_dev_db`.`post_image`, CONSTRAINT `post_image_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`) ON DELETE SET NULL ON UPDATE CASCADE)","level":"error"}
+{"message":"Cannot add or update a child row: a foreign key constraint fails (`heart_to_heart_server_dev_db`.`post_image`, CONSTRAINT `post_image_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`) ON DELETE SET NULL ON UPDATE CASCADE)","level":"error"}
+{"message":"postImages is not defined","level":"error"}
+{"message":"postImages is not defined","level":"error"}
+{"message":"Truncated incorrect DOUBLE value: '[object Object]'","level":"error"}
+{"message":"Truncated incorrect DOUBLE value: '[object Object]'","level":"error"}
+{"message":"createdPost.createPost is not a function","level":"error"}
+{"message":"createdPost.createPost is not a function","level":"error"}
+{"message":"createdPost.createPostImages is not a function","level":"error"}
+{"message":"createdPost.createPostImages is not a function","level":"error"}
+{"message":"Truncated incorrect DOUBLE value: '[object Object]'","level":"error"}
+{"message":"Truncated incorrect DOUBLE value: '[object Object]'","level":"error"}
+{"message":"createdPost.createPostImages is not a function","level":"error"}
+{"message":"createdPost.createPostImages is not a function","level":"error"}
+{"message":"createdPost is not defined","level":"error"}
+{"message":"createdPost is not defined","level":"error"}
+{"message":"createdPostImages is not defined","level":"error"}
+{"message":"createdPostImages is not defined","level":"error"}
+{"message":"images is not defined","level":"error"}
+{"message":"images is not defined","level":"error"}

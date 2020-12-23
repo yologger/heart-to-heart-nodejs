@@ -56,3 +56,67 @@
 {"message":"Unexpected field","level":"error"}
 {"message":"Hello","level":"info"}
 {"message":"Unexpected field","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"body is not defined","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"body is not defined","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"Unknown column 'user.userId' in 'where clause'","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"Unknown column 'user.userId' in 'where clause'","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"Unknown column 'user.user_id' in 'where clause'","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"Unknown column 'user.user_id' in 'where clause'","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"Cannot access 'images' before initialization","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"Cannot access 'images' before initialization","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"post.addPostImages is not a function","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"post.addPostImages is not a function","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"post.createPostImage is not a function","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"post.createPostImage is not a function","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"Cannot add or update a child row: a foreign key constraint fails (`heart_to_heart_server_dev_db`.`post_image`, CONSTRAINT `post_image_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`) ON DELETE SET NULL ON UPDATE CASCADE)","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"Cannot add or update a child row: a foreign key constraint fails (`heart_to_heart_server_dev_db`.`post_image`, CONSTRAINT `post_image_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`) ON DELETE SET NULL ON UPDATE CASCADE)","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"postImages is not defined","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"postImages is not defined","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"Truncated incorrect DOUBLE value: '[object Object]'","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"Truncated incorrect DOUBLE value: '[object Object]'","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"createdPost.createPost is not a function","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"createdPost.createPost is not a function","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"createdPost.createPostImages is not a function","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"createdPost.createPostImages is not a function","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"Truncated incorrect DOUBLE value: '[object Object]'","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"Truncated incorrect DOUBLE value: '[object Object]'","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"createdPost.createPostImages is not a function","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"createdPost.createPostImages is not a function","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"createdPost is not defined","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"createdPost is not defined","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"createdPostImages is not defined","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"createdPostImages is not defined","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"images is not defined","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"images is not defined","level":"error"}
