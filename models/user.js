@@ -28,6 +28,10 @@ module.exports = (sequelize, Sequelize) => (
         refresh_token: {
             type: Sequelize.STRING(300),
             allowNull: true
+        },
+        url: {
+            type: Sequelize.STRING(300),
+            allowNull: true
         }
     }, {
         freezeTableName: true,

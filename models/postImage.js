@@ -3,7 +3,7 @@ module.exports = (sequelize, Sequelize) => (
         url: {
             type: Sequelize.STRING(300),
             allowNull: false
-        },
+        }
     }, {
         freezeTableName: true,
         tableName: "post_image",

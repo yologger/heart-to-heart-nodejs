@@ -21,8 +21,17 @@ db.Hashtag = require('./hashtag')(sequelize, Sequelize);
 db.Session = require('./session')(sequelize, Sequelize);
 db.PostImage = require('./postImage')(sequelize, Sequelize);
 
-db.User.hasMany(db.Post)
+// 1:1
 db.User.hasOne(db.Session)
+
+// 1:N
+db.User.hasMany(db.Post)
+db.Post.belongsTo(db.User)
+// db.User.hasMany(db.Post, { foreignKey: 'author', sourceKey: 'id' })
+// db.Post.belongsTo(db.User, { foreignKey: 'author', targetKey: 'id' })
+
+
+
 db.Post.hasMany(db.PostImage)
 // db.Post.belongsToMany(db.Hashtag, { through: 'post_hashtag' })
 // db.Hashtag.belongsToMany(db.Post, { through: 'post_hashtag' })

@@ -6,6 +6,7 @@ const path = require('path')
 const { verifyAccessToken } = require('../middleware')
 const { User, PostImage, Post } = require('../../models')
 
+
 fs.readdir('uploads', (error) => {
     if (error) {
         fs.mkdirSync('uploads')
@@ -51,6 +52,55 @@ const upload = multer({
 //     })
 // })
 
+router.get('/posts', async (req, res, next) => {
+
+    const page = req.query["page"]
+    const size = req.query["size"]
+
+    if (!page) {
+        res.status(400).json({
+            code: -2,
+            error_message: "page does not exists."
+        })
+    } else {
+        if (!size) {
+            res.status(400).json({
+                code: -2,
+                error_message: "size does not exists."
+            })
+        } else {
+            const offset = page * size
+            const limit = size
+            try {
+                let posts = await Post.findAll({
+                    offset: +offset,
+                    limit: +limit,
+                    attributes: ["id", "content", "createdAt", "userId"],
+                    include: [{
+                        model: User,
+                        attributes: ["nickname", "email", "url"]
+                    }, {
+                        model: PostImage,
+                        attributes: ["id", "url"]
+                    }]
+                })
+
+                res.status(200).json({
+                    code: 1,
+                    message: "success",
+                    count: posts.length,
+                    data: {
+                        posts: posts
+                    }
+                })
+            } catch (error) {
+                console.error(error)
+                next(error)
+            }
+        }
+    }
+})
+
 router.post('/post', upload.array('field'), async (req, res, next) => {
 
     try {
@@ -58,7 +108,7 @@ router.post('/post', upload.array('field'), async (req, res, next) => {
             where: { id: req.body["user_id"] }
         })
 
-        if(!user) {
+        if (!user) {
             // User does not exist.
             return res.status(400).json({
                 "code": -1,
@@ -95,7 +145,7 @@ router.post('/post', upload.array('field'), async (req, res, next) => {
             }
         })
 
-    } catch(error) {
+    } catch (error) {
         console.error(error)
         next(error)
     }

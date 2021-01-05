@@ -7,6 +7,10 @@ const path = require('path')
 const helmet = require('helmet')
 const hpp = require('hpp')
 
+const date = new Date('Oct 13, 1991 17:22:10')
+console.log(date)   // 1991-10-13T08:22:10.000Z
+console.log(date.getMilliseconds())   // 1991-10-13T08:22:10.000Z
+
 const logger = require('./logger')
 
 require('dotenv').config()
@@ -38,7 +42,8 @@ if (process.env.NODE_ENV === 'production') {
 
 // app.use('/', express.static(path.join(__dirname, '/public')))
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')))
-app.use('/', bodyParser.urlencoded({ extended: false }))
+// app.use('/', bodyParser.urlencoded({ extended: false }))
+app.use('/', bodyParser.urlencoded({ extended: true }))
 app.use('/', bodyParser.json())
 app.use('/', cookieParser())
 app.use('/', passport.initialize())
