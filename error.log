@@ -107,3 +107,22 @@
 {"message":"Data too long for column 'content' at row 1","level":"error"}
 {"message":"Data too long for column 'content' at row 1","level":"error"}
 {"message":"Data too long for column 'content' at row 1","level":"error"}
+{"message":"WHERE parameter \"id\" has invalid \"undefined\" value","level":"error"}
+{"message":"WHERE parameter \"id\" has invalid \"undefined\" value","level":"error"}
+{"message":"WHERE parameter \"id\" has invalid \"undefined\" value","level":"error"}
+{"message":"WHERE parameter \"id\" has invalid \"undefined\" value","level":"error"}
+{"message":"WHERE parameter \"id\" has invalid \"undefined\" value","level":"error"}
+{"message":"WHERE parameter \"id\" has invalid \"undefined\" value","level":"error"}
+{"message":"WHERE parameter \"id\" has invalid \"undefined\" value","level":"error"}
+{"message":"user is not defined","level":"error"}
+{"message":"WHERE parameter \"id\" has invalid \"undefined\" value","level":"error"}
+{"message":"WHERE parameter \"id\" has invalid \"undefined\" value","level":"error"}
+{"message":"user is not defined","level":"error"}
+{"message":"user is not defined","level":"error"}
+{"message":"user is not defined","level":"error"}
+{"message":"user is not defined","level":"error"}
+{"message":"user is not defined","level":"error"}
+{"message":"user is not defined","level":"error"}
+{"message":"user is not defined","level":"error"}
+{"message":"user is not defined","level":"error"}
+{"message":"user is not defined","level":"error"}

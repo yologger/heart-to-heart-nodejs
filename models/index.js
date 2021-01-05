@@ -30,10 +30,21 @@ db.Post.belongsTo(db.User)
 // db.User.hasMany(db.Post, { foreignKey: 'author', sourceKey: 'id' })
 // db.Post.belongsTo(db.User, { foreignKey: 'author', targetKey: 'id' })
 
-
-
 db.Post.hasMany(db.PostImage)
 // db.Post.belongsToMany(db.Hashtag, { through: 'post_hashtag' })
 // db.Hashtag.belongsToMany(db.Post, { through: 'post_hashtag' })
+
+// N:M
+db.User.belongsToMany(db.User, {
+  foreignKey: "followingId",
+  as: "Followers",
+  through: "follow"
+})
+
+db.User.belongsToMany(db.User, {
+  foreignKey: "followerId",
+  as: "Followings",
+  through: "follow"
+})
 
 module.exports = db;

@@ -58,8 +58,6 @@ router.post('/avatar', upload.single('field'), async (req, res, next) => {
 
 })
 
-
-
 router.use('/user', (req, res) => {
     // const userId = req.params.id
     var user = {
@@ -76,6 +74,24 @@ router.use('/user', (req, res) => {
 
     // var users = ["Ronaldo", "Benzema", "Kane"]
     // res.json(users)
+})
+
+router.post("/:following/follow", async (req, res, next) => {
+    try {
+        let follower = req.body["follower_id"]
+        let following = req.params["following"]
+
+        const me = await User.findOne({ where: { id: follower } })
+        await me.addFollowing(parseInt(following, 10))
+        console.log(me)
+        res.status(200).json({
+            "code": -1,
+            "message": "success"
+        })
+    } catch(e) {
+        console.error(e)
+        next(e)
+    }
 })
 
 module.exports = router

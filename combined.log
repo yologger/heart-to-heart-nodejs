@@ -216,3 +216,41 @@
 {"message":"Data too long for column 'content' at row 1","level":"error"}
 {"message":"Hello","level":"info"}
 {"message":"Data too long for column 'content' at row 1","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"WHERE parameter \"id\" has invalid \"undefined\" value","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"WHERE parameter \"id\" has invalid \"undefined\" value","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"WHERE parameter \"id\" has invalid \"undefined\" value","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"WHERE parameter \"id\" has invalid \"undefined\" value","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"WHERE parameter \"id\" has invalid \"undefined\" value","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"WHERE parameter \"id\" has invalid \"undefined\" value","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"WHERE parameter \"id\" has invalid \"undefined\" value","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"user is not defined","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"WHERE parameter \"id\" has invalid \"undefined\" value","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"WHERE parameter \"id\" has invalid \"undefined\" value","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"user is not defined","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"user is not defined","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"user is not defined","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"user is not defined","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"user is not defined","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"user is not defined","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"user is not defined","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"user is not defined","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"user is not defined","level":"error"}
