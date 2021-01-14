@@ -254,3 +254,29 @@
 {"message":"user is not defined","level":"error"}
 {"message":"Hello","level":"info"}
 {"message":"user is not defined","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"Not found","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"Not found","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"Not found","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"Not found","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"Not found","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"Not found","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"Not found","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"Unknown column 'post.DESC' in 'order clause'","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"Unknown column 'post.DESC' in 'order clause'","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"findOne is not defined","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"findOne is not defined","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"findOne is not defined","level":"error"}
+{"message":"Hello","level":"info"}
+{"message":"findOne is not defined","level":"error"}

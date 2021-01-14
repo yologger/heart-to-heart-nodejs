@@ -4,7 +4,7 @@ const multer = require('multer')
 const fs = require('fs')
 const path = require('path')
 const { verifyAccessToken } = require('../middleware')
-const { User, PostImage, Post } = require('../../models')
+const { User, PostImage, Post, Love } = require('../../models')
 
 
 fs.readdir('uploads', (error) => {
@@ -75,6 +75,7 @@ router.get('/posts', async (req, res, next) => {
                 let posts = await Post.findAll({
                     offset: +offset,
                     limit: +limit,
+                    order: [['createdAt', 'DESC']],
                     attributes: ["id", "content", "createdAt", "userId"],
                     include: [{
                         model: User,
@@ -129,19 +130,26 @@ router.post('/post', upload.array('field'), async (req, res, next) => {
         }
 
         let postImages = await PostImage.bulkCreate(images)
-        await post.addPostImages(postImages)
+        let createdpost = await post.addPostImages(postImages)
 
-
-        let urls = []
-        for (var idx in req.files) {
-            urls.push(req.files[idx].path)
-        }
+        let createdPostId = createdpost.dataValues.id
+        let _createdPost = await Post.findOne({ 
+            where: { id: createdPostId },
+            attributes: ["id", "content", "createdAt", "userId"],
+            include: [{
+                model: User,
+                attributes: ["nickname", "email", "url"]
+            }, {
+                model: PostImage,
+                attributes: ["id", "url"]
+            }]
+        })
 
         res.status(200).json({
             code: 1,
             message: "Post successfully created.",
             data: {
-                "image_urls": urls
+                post: _createdPost
             }
         })
 
@@ -168,10 +176,18 @@ router.get('/test', verifyAccessToken, (req, res) => {
     })
 })
 
-router.post('/', (req, res) => {
-    console.log('Hello World!!!!~!!~')
-    res.status(233).json({
-        "result": "result"
+router.post("/:post/love", async (req, res) => {
+    const postId = req.params["post"]
+    const userId = req.body["user"]
+
+    const post = await Post.findOne({ where: { id: postId } })
+
+    // await me.addFollowing(parseInt(following, 10))
+    const user = await Love.create({ userId: userId })
+    await post.addLove(user)
+
+    res.json({
+        "data": "qew"
     })
 })
 

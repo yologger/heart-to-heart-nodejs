@@ -83,7 +83,7 @@ router.post("/:following/follow", async (req, res, next) => {
 
         const me = await User.findOne({ where: { id: follower } })
         await me.addFollowing(parseInt(following, 10))
-        console.log(me)
+        
         res.status(200).json({
             "code": -1,
             "message": "success"

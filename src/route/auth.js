@@ -139,6 +139,14 @@ router.post('/login', (req, res, next) => {
     })(req, res, next);
 });
 
+router.get('/token', verifyAccessToken, (req, res) => {
+    console.log("GERERER")
+    res.status(200).json({
+        "code": 1,
+        "message": "VALID TOKEN"
+    })
+})
+
 router.post('/token', verifyRefreshToken, async (req, res) => {
 
     try {

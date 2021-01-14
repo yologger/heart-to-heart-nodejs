@@ -15,11 +15,12 @@ const sequelize = new Sequelize(
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-db.User = require('./user')(sequelize, Sequelize);
-db.Post = require('./post')(sequelize, Sequelize);
-db.Hashtag = require('./hashtag')(sequelize, Sequelize);
-db.Session = require('./session')(sequelize, Sequelize);
-db.PostImage = require('./postImage')(sequelize, Sequelize);
+db.User = require('./user')(sequelize, Sequelize)
+db.Post = require('./post')(sequelize, Sequelize)
+db.Hashtag = require('./hashtag')(sequelize, Sequelize)
+db.Session = require('./session')(sequelize, Sequelize)
+db.PostImage = require('./postImage')(sequelize, Sequelize)
+db.Favorite = require("./favorite")(sequelize, Sequelize)
 
 // 1:1
 db.User.hasOne(db.Session)
@@ -29,6 +30,9 @@ db.User.hasMany(db.Post)
 db.Post.belongsTo(db.User)
 // db.User.hasMany(db.Post, { foreignKey: 'author', sourceKey: 'id' })
 // db.Post.belongsTo(db.User, { foreignKey: 'author', targetKey: 'id' })
+db.Post.hasMany(db.Favorite)
+db.Favorite.belongsTo(db.Post)
+
 
 db.Post.hasMany(db.PostImage)
 // db.Post.belongsToMany(db.Hashtag, { through: 'post_hashtag' })
