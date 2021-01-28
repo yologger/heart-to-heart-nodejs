@@ -2,9 +2,32 @@ const express = require('express')
 const bcrypto = require('bcrypt')
 const passport = require('passport')
 const jwt = require('jsonwebtoken')
+const multer = require('multer')
+const fs = require('fs')
+const path = require('path')
 const { User } = require('../../models/index.js')
 const { verifyAccessToken, verifyRefreshToken } = require('../middleware')
 const router = express.Router()
+
+fs.readdir('uploads', (error) => {
+    if (error) {
+        fs.mkdirSync('uploads')
+    }
+})
+
+const upload = multer({
+    storage: multer.diskStorage({
+        destination(req, file, callback) {
+            callback(null, 'uploads/')
+        },
+        filename(req, file, callback) {
+            const ext = path.extname(file.originalname)
+            callback(null, path.basename(file.originalname, ext) + '_' + new Date().valueOf() + ext)
+        }
+    }),
+    limits: { fileSize: 50 * 1024 * 1024 }   // 50MB
+})
+
 
 router.post('/signup', async (req, res, next) => {
 
@@ -74,7 +97,7 @@ router.post('/login', (req, res, next) => {
                     "code": -1,
                     "error_message": info.message
                 });
-                
+
             } else {
                 // Invalid Password
                 return res.status(400).json({
@@ -89,7 +112,7 @@ router.post('/login', (req, res, next) => {
             try {
                 if (error) {
                     return res.status(500).json({
-                        "code": -3, 
+                        "code": -3,
                         "error_message": error.message
                     })
                 }
@@ -118,12 +141,19 @@ router.post('/login', (req, res, next) => {
                     where: { email: user.email }
                 })
 
+                var result = await User.findOne({
+                    where: { email: user.email }
+                })
+
+                var url = result.dataValues.url
+
                 return res.status(201).json({
                     "code": 1,
                     "message": "Successfuly logged in.",
                     "data": {
                         "user_id": user.id,
                         "email": user.email,
+                        "url": url,
                         "nickname": user.nickname,
                         "access_token": accessToken,
                         "refresh_token": refreshToken
@@ -226,7 +256,7 @@ router.post('/logout', verifyAccessToken, async (req, res) => {
         var authHeader = req.headers.authorization
         var accessToken = authHeader.substring(7, authHeader.length)
         var decoded = jwt.decode(accessToken);
-        
+
         await User.update({
             access_token: null,
             refresh_token: null
@@ -241,6 +271,28 @@ router.post('/logout', verifyAccessToken, async (req, res) => {
             message: `Successfully logged out.`
         })
 
+    } catch (error) {
+        console.error(error)
+        next(error)
+    }
+})
+
+router.post('/avatar', upload.single('avatar'), async (req, res, next) => {
+    try {
+        let userId = req.body["user_id"]
+        let path = req.file.path
+
+        await User.update({
+            url: path
+        }, {
+            where: { id: userId }
+        })
+
+        res.status(200).json({
+            "code": 1,
+            "message": "Avatar image has been successfully updated.",
+            "url": path 
+        })
     } catch (error) {
         console.error(error)
         next(error)

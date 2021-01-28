@@ -23,7 +23,7 @@ const upload = multer({
             callback(null, path.basename(file.originalname, ext) + '_' + new Date().valueOf() + ext)
         }
     }),
-    limits: { fileSize: 5 * 1024 * 1024 }   // 5MB
+    limits: { fileSize: 50 * 1024 * 1024 }   // 50MB
 })
 
 // router.post('/img', upload.single('field'), (req, res) => {
@@ -104,6 +104,15 @@ router.get('/posts', async (req, res, next) => {
 
 router.post('/post', upload.array('field'), async (req, res, next) => {
 
+    console.log(`content: ${req.body['content']}`)
+    console.log("HERE!!!")
+    console.log(`req.body.user_id: ${req.body.user_id}`)
+    console.log("files: ")
+    console.log(req.files)
+    for (file in req.files) {
+        console.log(`Filename: ${file.filename} + ${file.mimetype}`)
+    }
+
     try {
         let user = await User.findOne({
             where: { id: req.body["user_id"] }
@@ -159,35 +168,38 @@ router.post('/post', upload.array('field'), async (req, res, next) => {
     }
 })
 
-router.get('/test', verifyAccessToken, (req, res) => {
-    res.status(202).json({
-        "code": 1,
-        "message": 'Success',
-        "data": {
-            "name": "ronaldo"
-            // "posts": [{
-            //     "author": "Kane",
-            //     "content": "Hello World"
-            // }, {
-            //     "author": "Ronaldo",
-            //     "content": "read madrid is good"
-            // }]
-        }
+router.post("/:post_id/like", async (req, res, next) => {
+
+    console.log("params: ")
+    console.log(req.params)
+    console.log("body: ")
+    console.log(req.body)
+    const postId = req.params["post_id"]
+    const userId = req.body["user_id"]
+
+    console.log(`postId: ${postId}`)
+    console.log(`userId: ${userId}`)
+
+    res.status(200).json({
+        "message": "like success.",
+        "post_id": postId,
+        "user_id": userId
     })
-})
 
-router.post("/:post/love", async (req, res) => {
-    const postId = req.params["post"]
-    const userId = req.body["user"]
-
-    const post = await Post.findOne({ where: { id: postId } })
+    // const post = await Post.findOne({ where: { id: postId } })
 
     // await me.addFollowing(parseInt(following, 10))
-    const user = await Love.create({ userId: userId })
-    await post.addLove(user)
+    // const user = await Love.create({ userId: userId })
+    // await post.addLove(user)
 
-    res.json({
-        "data": "qew"
+})
+
+router.post("/:post_id/like", (req, res, next) => {
+
+    res.status(200).json({
+        "message": "unlike success.",
+        "post_id": postId,
+        "user_id": userId
     })
 })
 
