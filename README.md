@@ -36,6 +36,7 @@ Heart to Heart for server has following dependencies:
 * Upload avatar image
 
 #### `Not Implemented Yet`
+* HTTPS
 * Follow other users
 * Like post
 * Find password
