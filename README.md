@@ -1,7 +1,7 @@
 # RESTful API Server for heart to heart based on Node.js
 
 ## Introduction 
-This project is RESTful API server for Heart to Heart application. You can also check `Heart to Heart` application for **Android** [here](https://github.com/yologger/heart_to_heart_android) and **iOS** [here](https://github.com/yologger/heart_to_heart_ios).
+This project is RESTful API server for Heart to Heart application. You can also check `Heart to Heart` application for **Android** [here](https://github.com/yologger/heart-to-heart-android-legacy) and **iOS** [here](https://github.com/yologger/heart-to-heart-ios).
 
 
 ## Platform
