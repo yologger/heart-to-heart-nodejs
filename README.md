@@ -1,7 +1,7 @@
 # API Web Server for heart to heart
 
-## Introduction
-This project is web server for Heart to Heart application. You can also check `Heart to Heart` application for **Android** [here](https://github.com/yologger/heart_to_heart_android) and **iOS** [here](https://github.com/yologger/heart_to_heart_ios).
+## Introduction 
+This project is RESTful API server for Heart to Heart application. You can also check `Heart to Heart` application for **Android** [here](https://github.com/yologger/heart_to_heart_android) and **iOS** [here](https://github.com/yologger/heart_to_heart_ios).
 
 
 ## Platform
