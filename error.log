@@ -188,3 +188,4 @@
 {"message":"Table 'heart_to_heart_server_dev_db.user' doesn't exist","level":"error"}
 {"message":"Table 'heart_to_heart_server_dev_db.user' doesn't exist","level":"error"}
 {"message":"Data too long for column 'content' at row 1","level":"error"}
+{"message":"notNull Violation: user.first_name cannot be null,\nnotNull Violation: user.last_name cannot be null,\nnotNull Violation: user.nickname cannot be null","level":"error"}

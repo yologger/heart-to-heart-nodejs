@@ -1,8 +1,11 @@
 # API Web Server for heart to heart
 
 ## Introduction
-**Heart to Heart** is a SNS application. This app is similar to Facebook. This project is web server for heart to heart application. You can also download Heart to Heart **for Android** [here](https://github.com/yologger/heart_to_heart_android) and **for iOS** [here](https://github.com/yologger/heart_to_heart_ios).
+**Heart to Heart** is a SNS application. This app is similar to Facebook. This project is web server for heart to heart application. You can also download Heart to Heart for **Android** [here](https://github.com/yologger/heart_to_heart_android) and **iOS** [here](https://github.com/yologger/heart_to_heart_ios).
 
+
+## Platform
+* Heroku 
 
 ## Dependencies
 Heart to Heart for server has following dependencies:
